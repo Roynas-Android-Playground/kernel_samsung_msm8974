@@ -254,6 +254,11 @@ static inline unsigned long kernel_stack_pointer(struct pt_regs *regs)
 	(struct pt_regs *)((sp | (THREAD_SIZE - 1)) - 7) - 1;	\
 })
 
+static inline unsigned long user_stack_pointer(struct pt_regs *regs)
+{
+	return regs->ARM_sp;
+}
+
 #endif /* __KERNEL__ */
 
 #endif /* __ASSEMBLY__ */
