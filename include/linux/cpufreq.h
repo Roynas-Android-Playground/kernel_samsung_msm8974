@@ -349,7 +349,6 @@ static inline unsigned int cpufreq_quick_get_max(unsigned int cpu)
 }
 #endif
 
-#if defined (CONFIG_SEC_DVFS) || defined (CONFIG_CPU_FREQ_LIMIT_USERSPACE)
 enum {
 	BOOT_CPU = 0,
 #if defined(CONFIG_SEC_MILLET_PROJECT) || defined(CONFIG_SEC_MATISSE_PROJECT) || defined(CONFIG_SEC_VICTOR_PROJECT) \
@@ -416,8 +415,11 @@ enum {
 	DVFS_MAX_ID
 };
 
-
+#ifdef CONFIG_CPU_FREQ_LIMIT_USERSPACE
 int set_freq_limit(unsigned long id, unsigned int freq);
+#else
+static inline int set_freq_limit(unsigned long id, unsigned int freq) { return 0; }
+#endif
 #if defined(CONFIG_SEC_MILLET_PROJECT) || defined(CONFIG_SEC_MATISSE_PROJECT) || defined(CONFIG_SEC_VICTOR_PROJECT) \
 	|| defined(CONFIG_SEC_BERLUTI_PROJECT)|| defined(CONFIG_SEC_FRESCONEO_PROJECT) || defined(CONFIG_SEC_AFYON_PROJECT) \
 	|| defined(CONFIG_SEC_S3VE_PROJECT) || defined(CONFIG_SEC_ATLANTIC_PROJECT) || defined(CONFIG_SEC_DEGAS_PROJECT) \
@@ -428,7 +430,6 @@ unsigned int get_min_lock(void);
 unsigned int get_max_lock(void);
 void set_min_lock(int freq);
 void set_max_lock(int freq);
-#endif
 #endif
 
 
